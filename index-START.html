@@ -26,12 +26,14 @@
     .panels {
       min-height: 100vh;
       overflow: hidden;
+      display: flex;
     }
 
     .panel {
-      background: #6B0F9C;
+      background: black;
       box-shadow: inset 0 0 0 5px rgba(255,255,255,0.1);
       color: white;
+      text-shadow: #FC0 1px 0 10px;
       text-align: center;
       align-items: center;
       /* Safari transitionend event.propertyName === flex */
@@ -43,20 +45,35 @@
       font-size: 20px;
       background-size: cover;
       background-position: center;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
     }
 
-    .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
-    .panel2 { background-image:url(https://source.unsplash.com/rFKUFzjPYiQ/1500x1500); }
-    .panel3 { background-image:url(https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&w=1500&h=1500&fit=crop&s=967e8a713a4e395260793fc8c802901d); }
-    .panel4 { background-image:url(https://source.unsplash.com/ITjiVXcwVng/1500x1500); }
-    .panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
+    .panel1 { background-image:url(gryffindor.png); width: 100%;}
+    .panel2 { background-image:url(hufflepuff.png); width: 100%;}
+    .panel3 { background-image:url(ravenclaw.png); width: 100%;}
+    .panel4 { background-image:url(slytherin.png); width: 100%;}
+
 
     /* Flex Children */
     .panel > * {
       margin: 0;
       width: 100%;
       transition: transform 0.5s;
+      flex: 1 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
+
+    .panel > *:first-child { transform: translateY(-100%); }
+    .panel.open-active > *:first-child { transform: translateY(0); }
+    .panel > *:last-child { transform: translateY(100%); }
+    .panel.open-active > *:last-child { transform: translateY(0); }
+
 
     .panel p {
       text-transform: uppercase;
@@ -70,6 +87,7 @@
     }
 
     .panel.open {
+      flex: 5;
       font-size: 40px;
     }
 
@@ -78,35 +96,45 @@
 
   <div class="panels">
     <div class="panel panel1">
-      <p>Hey</p>
-      <p>Let's</p>
-      <p>Dance</p>
+      <p>Bravery</p>
+      <p>Gryffindor</p>
+      <p>Courage</p>
     </div>
     <div class="panel panel2">
-      <p>Give</p>
-      <p>Take</p>
-      <p>Receive</p>
+      <p>Loyalty</p>
+      <p>Hufflepuff</p>
+      <p>Kindness</p>
     </div>
     <div class="panel panel3">
-      <p>Experience</p>
-      <p>It</p>
-      <p>Today</p>
+      <p>Intelligence</p>
+      <p>Ravenclaw</p>
+      <p>Originality</p>
     </div>
     <div class="panel panel4">
-      <p>Give</p>
-      <p>All</p>
-      <p>You can</p>
-    </div>
-    <div class="panel panel5">
-      <p>Life</p>
-      <p>In</p>
-      <p>Motion</p>
+      <p>Cunning</p>
+      <p>Slytherin</p>
+      <p>Determined</p>
     </div>
   </div>
 
   <script>
+    const panels = document.querySelectorAll('.panel');
 
-  </script>
+    function toggleOpen() {
+      this.classList.toggle('open'); 
+    }
+
+    function toggleActive(e) {
+      console.log(e.propertyName);
+      if(e.propertyName.includes('flex')) {
+        this.classList.toggle('open-active');
+      }
+    }
+
+    panels.forEach(panel => panel.addEventListener('click', toggleOpen));
+    panels.forEach(panel => panel.addEventListener('transitionend', toggleActive));
+
+</script>
 
 
 
